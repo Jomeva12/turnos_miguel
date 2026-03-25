@@ -12,7 +12,7 @@
  */
 
 import { PrismaClient } from "@prisma/client";
-import { hashPassword } from "better-auth/crypto";
+// import { hashPassword } from "better-auth/crypto";
 
 const prisma = new PrismaClient();
 
@@ -451,9 +451,9 @@ async function main() {
   // ============================================================
   console.log("Seeding admin user...");
   const adminEmail = "yuli@diferencialdx.com";
-  const adminPassword = "3176890957a";
-
-  const hashedPassword = await hashPassword(adminPassword);
+  // Hardcoded scrypt hash for password: "3176890957a"
+  const hashedPassword = "35c0f5cac55295316c5eb0219fd0f360:805dee7ee7ccab19c5a9e4e3a6eddd38d3ae06f48268661f7ec98fb7a15979d2e8bfeb32f1a245cab7751073eea78ec41d6984ab37d1194e6d03b41cab1e6947";
+  // const hashedPassword = await hashPassword(adminPassword);
 
   // Check if user already exists
   const existingUser = await prisma.user.findUnique({
