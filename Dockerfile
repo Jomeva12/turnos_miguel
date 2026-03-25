@@ -9,6 +9,15 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+# Pass build args to environment so Next.js can build static pages requiring DB
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
+ARG BETTER_AUTH_SECRET
+ENV BETTER_AUTH_SECRET=$BETTER_AUTH_SECRET
+ARG BETTER_AUTH_URL
+ENV BETTER_AUTH_URL=$BETTER_AUTH_URL
+
 RUN npx prisma generate
 RUN npm run build
 
