@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+export const dynamic = "force-dynamic";
 import CoberturaGantt, { CoberturaData } from "@/components/cobertura/CoberturaGantt";
 import DateSelector from "@/components/cobertura/DateSelector";
 

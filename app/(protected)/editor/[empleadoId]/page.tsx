@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation"
+export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/db"
 import { EditorIndividual } from "@/components/planilla/EditorIndividual"
 import { getShiftsForMonth, getAbsencesForMonth } from "@/lib/db/shifts"

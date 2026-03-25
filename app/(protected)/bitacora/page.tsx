@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+export const dynamic = "force-dynamic";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { auth } from "@/lib/auth";

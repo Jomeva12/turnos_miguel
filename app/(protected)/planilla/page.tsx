@@ -1,4 +1,5 @@
 import { PlanillaGrid } from "@/components/planilla/PlanillaGrid"
+export const dynamic = "force-dynamic";
 import { getEmployeesWithAreas } from "@/lib/db/employees"
 import { getShiftsForMonth, getAbsencesForMonth } from "@/lib/db/shifts"
 import { getShiftTemplates } from "@/lib/db/templates"

@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+export const dynamic = "force-dynamic";
 import AusenciasForm from "@/components/ausencias/AusenciasForm";
 import AusenciasList from "@/components/ausencias/AusenciasList";
 
