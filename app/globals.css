@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Dark mode CSS variables (Tailwind v4 — no tailwind.config.js)
+   ============================================================ */
+
+:root {
+  --background: hsl(222, 47%, 11%);
+  --foreground: hsl(210, 40%, 98%);
+  --card: hsl(222, 47%, 14%);
+  --card-foreground: hsl(210, 40%, 98%);
+  --popover: hsl(222, 47%, 14%);
+  --popover-foreground: hsl(210, 40%, 98%);
+  --primary: hsl(217, 91%, 60%);
+  --primary-foreground: hsl(222, 47%, 11%);
+  --secondary: hsl(222, 47%, 18%);
+  --secondary-foreground: hsl(210, 40%, 98%);
+  --muted: hsl(222, 47%, 18%);
+  --muted-foreground: hsl(215, 16%, 65%);
+  --accent: hsl(222, 47%, 18%);
+  --accent-foreground: hsl(210, 40%, 98%);
+  --destructive: hsl(0, 72%, 51%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --border: hsl(222, 47%, 20%);
+  --input: hsl(222, 47%, 18%);
+  --ring: hsl(217, 91%, 60%);
+  --radius: 0.5rem;
+
+  /* Glass morphism tokens */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-bg-hover: rgba(255, 255, 255, 0.08);
+}
+
+/* ============================================================
+   Base styles
+   ============================================================ */
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  background-image:
+    radial-gradient(ellipse at top left, hsl(217, 91%, 20%) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, hsl(270, 50%, 20%) 0%, transparent 50%);
+  min-height: 100vh;
+}
+
+/* ============================================================
+   Glassmorphism utility
+   ============================================================ */
+
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass:hover {
+  background: var(--glass-bg-hover);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--radius);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.3),
+    0 2px 4px -2px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+/* ============================================================
+   Area badge colors
+   ============================================================ */
+
+.badge-general         { background-color: #6b7280; color: white; }
+.badge-buffet          { background-color: #f59e0b; color: white; }
+.badge-cosmetico       { background-color: #ec4899; color: white; }
+.badge-domicilios      { background-color: #3b82f6; color: white; }
+.badge-electrodomestico { background-color: #8b5cf6; color: white; }
+.badge-marking         { background-color: #10b981; color: white; }
+.badge-varely-camacho  { background-color: #ef4444; color: white; }

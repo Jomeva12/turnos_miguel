@@ -1,0 +1,153 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// better-auth managed tables
+// ============================================================
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  @@map("verification")
+}
+
+// ============================================================
+// Domain models
+// ============================================================
+
+model Employee {
+  id        Int            @id @default(autoincrement())
+  name      String
+  createdAt DateTime       @default(now())
+  areas     EmployeeArea[]
+  shifts    Shift[]
+  absences  Absence[]
+
+  @@map("employee")
+}
+
+model Area {
+  id             Int             @id @default(autoincrement())
+  name           String          @unique
+  color          String
+  employees      EmployeeArea[]
+  shiftTemplates ShiftTemplate[]
+  shifts         Shift[]
+
+  @@map("area")
+}
+
+model EmployeeArea {
+  employeeId Int
+  areaId     Int
+  employee   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  area       Area     @relation(fields: [areaId], references: [id], onDelete: Cascade)
+
+  @@id([employeeId, areaId])
+  @@map("employee_area")
+}
+
+model ShiftTemplate {
+  id            Int     @id @default(autoincrement())
+  areaId        Int
+  dayOfWeek     Int     // 1=Mon ... 7=Sun
+  timeSlot      String  // "7:00-11:00|11:30-14:30"
+  isWildcard    Boolean @default(false)
+  requiredCount Int     @default(1)
+  area          Area    @relation(fields: [areaId], references: [id], onDelete: Cascade)
+
+  @@map("shift_template")
+}
+
+model Shift {
+  id         Int      @id @default(autoincrement())
+  employeeId Int
+  date       DateTime @db.Date
+  timeSlot   String?
+  areaId     Int?
+  isManual   Boolean  @default(false)
+  employee   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  area       Area?    @relation(fields: [areaId], references: [id], onDelete: SetNull)
+
+  @@unique([employeeId, date])
+  @@map("shift")
+}
+
+model Absence {
+  id         Int      @id @default(autoincrement())
+  employeeId Int
+  startDate  DateTime @db.Date
+  endDate    DateTime @db.Date
+  type       String   // VAC | INC | PER | CAL | DESCANSO
+  employee   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@map("absence")
+}
+
+model GenerationLog {
+  id        Int      @id @default(autoincrement())
+  month     Int
+  year      Int
+  createdAt DateTime @default(now())
+  notes     Json
+
+  @@map("generation_log")
+}
